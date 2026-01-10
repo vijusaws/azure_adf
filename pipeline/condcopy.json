@@ -121,7 +121,13 @@
 										"outputs": [
 											{
 												"referenceName": "DimSink",
-												"type": "DatasetReference"
+												"type": "DatasetReference",
+												"parameters": {
+													"p_file_name": {
+														"value": "@activity('CondCopyFromMeta').output.childItems",
+														"type": "Expression"
+													}
+												}
 											}
 										]
 									}
