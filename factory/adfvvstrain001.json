@@ -1,0 +1,9 @@
+{
+	"name": "adfvvstrain001",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "8fa8b316-4a03-485a-9351-c3fa1b8f9305",
+		"tenantId": "647578da-cd24-4945-b2da-670340812b1b"
+	}
+}
