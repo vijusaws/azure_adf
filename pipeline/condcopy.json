@@ -24,6 +24,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -109,13 +110,7 @@
 										"inputs": [
 											{
 												"referenceName": "DelimitedText3",
-												"type": "DatasetReference",
-												"parameters": {
-													"p_filename": {
-														"value": "@activity('CondCopyFromMeta').output.childItems.name",
-														"type": "Expression"
-													}
-												}
+												"type": "DatasetReference"
 											}
 										],
 										"outputs": [
