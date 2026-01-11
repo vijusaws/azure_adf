@@ -61,6 +61,66 @@
 									"value": "@startswith(item().name,'Dim')",
 									"type": "Expression"
 								},
+								"ifFalseActivities": [
+									{
+										"name": "cpyFactFiles",
+										"type": "Copy",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "DelimitedTextSource",
+												"storeSettings": {
+													"type": "AzureBlobFSReadSettings",
+													"recursive": true,
+													"enablePartitionDiscovery": false
+												},
+												"formatSettings": {
+													"type": "DelimitedTextReadSettings"
+												}
+											},
+											"sink": {
+												"type": "DelimitedTextSink",
+												"storeSettings": {
+													"type": "AzureBlobFSWriteSettings"
+												},
+												"formatSettings": {
+													"type": "DelimitedTextWriteSettings",
+													"quoteAllText": true,
+													"fileExtension": ".txt"
+												}
+											},
+											"enableStaging": false,
+											"translator": {
+												"type": "TabularTranslator",
+												"typeConversion": true,
+												"typeConversionSettings": {
+													"allowDataTruncation": true,
+													"treatBooleanAsNumber": false
+												}
+											}
+										},
+										"inputs": [
+											{
+												"referenceName": "FactSrcList",
+												"type": "DatasetReference"
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "sinkFactFiles",
+												"type": "DatasetReference"
+											}
+										]
+									}
+								],
 								"ifTrueActivities": [
 									{
 										"name": "cpyDimfiles",
@@ -110,7 +170,13 @@
 										"inputs": [
 											{
 												"referenceName": "DelimitedText3",
-												"type": "DatasetReference"
+												"type": "DatasetReference",
+												"parameters": {
+													"p_filename": {
+														"value": "@item().name",
+														"type": "Expression"
+													}
+												}
 											}
 										],
 										"outputs": [
@@ -119,7 +185,7 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"p_file_name": {
-														"value": "@activity('CondCopyFromMeta').output.childItems",
+														"value": "@item().name",
 														"type": "Expression"
 													}
 												}
